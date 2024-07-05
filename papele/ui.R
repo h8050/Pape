@@ -13,7 +13,6 @@ library(shinythemes)
 library(shinyauthr)
 library(RSQLite)
 library(DBI)
-# library(sodium)
 library(tidyverse)
 library(shinydashboardPlus)
 library(shinyWidgets)
@@ -36,7 +35,7 @@ dropdownActionMenu <-
       a(
         href = "#",
         class = "dropdown-toggle",
-        `data-toggle` = "dropdown",
+        `data-toggle` = "",
         icon,
         title
       ),
@@ -74,84 +73,82 @@ shinyUI(
     # extendShinyjs(text="shinyjs.tabSelect=function(tabName){$('a[data-value='+tabName+']').click();}"),
     # put the shinyauthr logout ui module in here
     dashboardHeader(
-      # titleWidth = 100,
-      title = "Test",
+      title = span(tags$img(src = "HP_2.png", height = '100%')),
+      
       #   tags$a(
       #   "!",
       # tags$img(src='HP_2.png', height='35')),
-      dropdownActionMenu(title = strong(
-        uiOutput("dd1")
-      )
-      ),
-      dropdownActionMenu(title = strong(
-        uiOutput("dd2")
-      )
-      ),
-      dropdownActionMenu(title = strong(
-        uiOutput("dd3")
-      )
-      ),
-      dropdownActionMenu(title = strong(
-        uiOutput("dd4")
-      )
-      ),
-      tags$li(
-        a(
-          strong("Tab Title 1"),
-          height = 30, 
-          title = "",
-        ),
-        class = "dropdown"
-      ),
-      tags$li(
-        a(
-          strong("Tab Title 2"),
-          height = 30, 
-          title = "",
-          target = "_blank"
-        ),
-        class = "dropdown"
-      ),
-      tags$li(
-        a(
-          strong("Tab Title 3"),
-          height = 30, 
-          title = "",
-          target = "_blank"
-        ),
-        class = "dropdown"
-      ),
-      tags$li(
-        a(
-          strong("Tab Title 4"),
-          height = 30, 
-          title = "",
-          target = "_blank"
-        ),
-        class = "dropdown"
-      ),
-      tags$li(
-        div(
-          href = 'http://highperformance.mx/',
-          img(
-            src = 'HP_2.png',
-            title = "HP",
-            height = "50"
-          )
-          # ,
-          # style = "padding: 5px;"
-        ),
-        class = "dropdown"
-      )
-      ,
+      # dropdownActionMenu(title = strong(
+      #   uiOutput("dd1")
+      # )
+      # ),
+      # dropdownActionMenu(title = strong(
+      #   uiOutput("dd2")
+      # )
+      # ),
+      # dropdownActionMenu(title = strong(
+      #   uiOutput("dd3")
+      # )
+      # ),
+      # dropdownActionMenu(title = strong(
+      #   uiOutput("dd4")
+      # )
+      # ),
+      # tags$li(
+      #   a(
+      #     strong("Tab Title 1"),
+      #     height = 30, 
+      #     title = "",
+      #   ),
+      #   class = "dropdown"
+      # ),
+      # tags$li(
+      #   a(
+      #     strong("Tab Title 2"),
+      #     height = 30, 
+      #     title = "",
+      #     target = "_blank"
+      #   ),
+      #   class = "dropdown"
+      # ),
+      # tags$li(
+      #   a(
+      #     strong("Tab Title 3"),
+      #     height = 30, 
+      #     title = "",
+      #     target = "_blank"
+      #   ),
+      #   class = "dropdown"
+      # ),
+      # tags$li(
+      #   a(
+      #     strong("Tab Title 4"),
+      #     height = 30, 
+      #     title = "",
+      #     target = "_blank"
+      #   ),
+      #   class = "dropdown"
+      # ),
+      # tags$li(
+      #   div(
+      #     href = 'http://highperformance.mx/',
+      #     img(
+      #       src = 'HP_2.png',
+      #       title = "HP",
+      #       height = "50"
+      #     )
+      #     # ,
+      #     # style = "padding: 5px;"
+      #   ),
+      #   class = "dropdown"
+      # )
       tags$li(
         class = "dropdown",
         # style = "padding: 5px;",
         shinyauthr::logoutUI("logout",
                              label = "Cerrar sesión",
                              style = "color: #b20b02")
-      )
-      ,
+      ),
       dropdownActionMenu(title=em(textOutput('tiempito'))
       )
     ),
@@ -162,6 +159,71 @@ shinyUI(
     
     
     dashboardBody(
+      #' tags$style(
+      #'   type = "text/css",
+      #'   "
+      #' /*    Move everything below the header */
+      #'     .content-wrapper {
+      #'         margin-top: 0px;
+      #'     }
+      #'     .content {
+      #'         padding-top: 140px;
+      #'     }
+      #' /*    Format the title/subtitle text */
+      #'     .title-box {
+      #'         position: absolute;
+      #'         text-align: center;
+      #'         top: 50%;
+      #'         left: 50%;
+      #'         transform:translate(-50%, -50%);
+      #'     }
+      #'     @media (max-width: 590px) {
+      #'         .title-box {
+      #'             position: absolute;
+      #'             text-align: center;
+      #'             top: 10%;
+      #'             left: 10%;
+      #'             transform:translate(-5%, -5%);
+      #'         }
+      #'     }
+      #'     @media (max-width: 767px) {
+      #'         .primary-title {
+      #'             font-size: 1.1em;
+      #'         }
+      #'         .primary-subtitle {
+      #'             font-size: 1em;
+      #'         }
+      #'     }
+      #' /*    Make the image taller */
+      #'     .main-header .logo {
+      #'         height: 100px;
+      #'     }
+      #' /*    Override the default media-specific settings */
+      #'     @media (max-width: 5000px) {
+      #'         .main-header {
+      #'             padding: 0 0;
+      #'             position: relative;
+      #'         }
+      #'         .main-header .logo,
+      #'         .main-header .navbar {
+      #'             width: 100%;
+      #'             float: none;
+      #'         }
+      #'         .main-header .navbar {
+      #'             margin: 0;
+      #'         }
+      #'         .main-header .navbar-custom-menu {
+      #'             float: right;
+      #'         }
+      #'     }
+      #' /*    Move the sidebar down */
+      #'     .main-sidebar {
+      #'         position: absolute;
+      #'     }
+      #'     .left-side, .main-sidebar {
+      #'         padding-top: 175px;
+      #'     }"
+      #' ),
       shinyjs::useShinyjs(),
       
       # put the shinyauthr login ui module here

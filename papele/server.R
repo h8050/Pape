@@ -13,11 +13,11 @@ library(shinythemes)
 library(shinyauthr)
 library(RSQLite)
 library(DBI)
-# library(sodium)
 library(tidyverse)
 library(shinydashboardPlus)
 library(shinyWidgets)
 library(fresh)
+library(shinyjs)
 library(colourpicker)
 
 conn <- dbConnect(SQLite(), "users.sqlite")
@@ -77,6 +77,9 @@ shinyServer(function(input, output, session) {
     req(creds()$user_auth)
     sidebarMenu(
       id = "tabs",
+      menuItem(text = div(
+        tags$img(src = 'HP_2.png', width = "66%"), style = "text-align: center"
+      )),
       menuItem("Bitácora General", tabName = "tab0"),
       menuItem("Storms Data", tabName = "tab1"),
       menuItem("Starwars Data", tabName = "tab2"),
@@ -126,8 +129,8 @@ shinyServer(function(input, output, session) {
   output$tiempito <- renderText({
     # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
     # req(creds()$user_auth)
-    invalidateLater(1000, session)
-    paste(format(Sys.time(), "%X"))
+    invalidateLater(60000, session)
+    paste(format(Sys.time(), "%R"))
   })
   
   output$dd1 <- renderText({
