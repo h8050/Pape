@@ -104,7 +104,8 @@ shinyServer(function(input, output, session) {
       menuItem("product_list", tabName = "tab1"),
       menuItem("sqlite_sequence", tabName = "tab2"),
       menuItem("transaction_list", tabName = "tab3"),
-      menuItem("user_list", tabName = "tab4")
+      menuItem("user_list", tabName = "tab4"),
+      menuItem("venta", tabName = "tab5")
     )
   })
   
@@ -156,6 +157,16 @@ shinyServer(function(input, output, session) {
   output$table4 <- DT::renderDT({
     DT::datatable(data_test4(), options = list(scrollX = TRUE))
   })
+  
+  # tab 5 UI and output ----------------------------------------
+  output$tab5_ui <- renderUI({
+    req(creds()$user_auth)
+    # DT::DTOutput("table5")
+  })
+  
+  # output$table4 <- DT::renderDT({
+  #   DT::datatable(data_test4(), options = list(scrollX = TRUE))
+  # })
   
   output$tiempito <- renderText({
     # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
