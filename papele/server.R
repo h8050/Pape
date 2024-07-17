@@ -64,12 +64,32 @@ shinyServer(function(input, output, session) {
   
   # Connect to database
   mydb <- reactive({
-    mydb = dbConnect(SQLite(), dbname="data_test.db")
+    mydb = dbConnect(SQLite(), dbname="cashiering_db.db")
   })
   
   # data Table
   data_test <- reactive({
-    data_test = fetch(dbSendQuery(mydb(), "select * from data"))
+    data_test = fetch(dbSendQuery(mydb(), "select * from items"))
+  })
+  
+  # data Table
+  data_test1 <- reactive({
+    data_test1 = fetch(dbSendQuery(mydb(), "select * from product_list"))
+  })
+  
+  # data Table
+  data_test2 <- reactive({
+    data_test2 = fetch(dbSendQuery(mydb(), "select * from sqlite_sequence"))
+  })
+  
+  # data Table
+  data_test3 <- reactive({
+    data_test3 = fetch(dbSendQuery(mydb(), "select * from transaction_list"))
+  })
+  
+  # data Table
+  data_test4 <- reactive({
+    data_test4 = fetch(dbSendQuery(mydb(), "select * from user_list"))
   })
   
   # only when credentials()$user_auth is TRUE, render your desired sidebar menu
@@ -80,10 +100,11 @@ shinyServer(function(input, output, session) {
       menuItem(text = div(
         tags$img(src = 'HP_2.png', width = "66%"), style = "text-align: center"
       )),
-      menuItem("Bitácora General", tabName = "tab0"),
-      menuItem("Storms Data", tabName = "tab1"),
-      menuItem("Starwars Data", tabName = "tab2"),
-      menuItem("GOperform Data", tabName = "tab3")
+      menuItem("items", tabName = "tab0"),
+      menuItem("product_list", tabName = "tab1"),
+      menuItem("sqlite_sequence", tabName = "tab2"),
+      menuItem("transaction_list", tabName = "tab3"),
+      menuItem("user_list", tabName = "tab4")
     )
   })
   
@@ -104,7 +125,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$table1 <- DT::renderDT({
-    DT::datatable(dplyr::storms, options = list(scrollX = TRUE))
+    DT::datatable(data_test1(), options = list(scrollX = TRUE))
   })
   
   # tab 2 UI and output ----------------------------------------
@@ -114,7 +135,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$table2 <- DT::renderDT({
-    DT::datatable(dplyr::starwars[, 1:10], options = list(scrollX = TRUE))
+    DT::datatable(data_test2(), options = list(scrollX = TRUE))
   })
   # tab 3 UI and output ----------------------------------------
   output$tab3_ui <- renderUI({
@@ -123,7 +144,17 @@ shinyServer(function(input, output, session) {
   })
   
   output$table3 <- DT::renderDT({
-    DT::datatable(data_test(), options = list(scrollX = TRUE))
+    DT::datatable(data_test3(), options = list(scrollX = TRUE))
+  })
+  
+  # tab 4 UI and output ----------------------------------------
+  output$tab4_ui <- renderUI({
+    req(creds()$user_auth)
+    DT::DTOutput("table4")
+  })
+  
+  output$table4 <- DT::renderDT({
+    DT::datatable(data_test4(), options = list(scrollX = TRUE))
   })
   
   output$tiempito <- renderText({
@@ -131,30 +162,6 @@ shinyServer(function(input, output, session) {
     # req(creds()$user_auth)
     invalidateLater(60000, session)
     paste(format(Sys.time(), "%R"))
-  })
-  
-  output$dd1 <- renderText({
-    # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
-    req(creds()$user_auth)
-    paste("dd 1")
-  })
-  
-  output$dd2 <- renderText({
-    # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
-    req(creds()$user_auth)
-    paste("dd 2")
-  })
-  
-  output$dd3 <- renderText({
-    # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
-    req(creds()$user_auth)
-    paste("dd 3")
-  })
-  
-  output$dd4 <- renderText({
-    # EL req() se puede usar para mostrarlo después de iniciar sesión o siempre
-    req(creds()$user_auth)
-    paste("dd 4")
   })
   
 })

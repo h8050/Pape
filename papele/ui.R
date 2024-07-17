@@ -253,7 +253,8 @@ shinyUI(
         tabItem("tab0", uiOutput("tab0_ui")),
         tabItem("tab1", uiOutput("tab1_ui")),
         tabItem("tab2", uiOutput("tab2_ui")),
-        tabItem("tab3", uiOutput("tab3_ui"))
+        tabItem("tab3", uiOutput("tab3_ui")),
+        tabItem("tab4", uiOutput("tab4_ui"))
       )
     ),
     md = TRUE,
