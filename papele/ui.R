@@ -229,7 +229,7 @@ shinyUI(
       # put the shinyauthr login ui module here
       shinyauthr::loginUI(
         "login",
-        title = "Acceso a la bitácora",
+        title = "Acceso al sistema",
         user_title = "Usuario",
         pass_title = "Contraseña",
         login_title = "Iniciar sesión",
